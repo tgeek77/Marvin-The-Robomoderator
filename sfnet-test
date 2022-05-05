@@ -1,0 +1,18 @@
+#!/bin/sh
+
+NNTPSERVER = "news.cc.tut.fi"
+export NNTPSERVER
+SMTPSERVER = "varis.cs.tut.fi"
+export SMTPSERVER
+ROBOMYNAME = "sfnet.test"
+export ROBOMYNAME
+ROBOAPPROVEEMAIL = "kaip+sfnet-test-request@cs.tut.fi"
+export ROBOAPPROVEEMAIL
+ROBONOREPLYEMAIL = "kaip+noreply@cs.tut.fi"
+export ROBONOREPLYEMAIL
+
+cd $HOME/robo && $HOME/robo/submission.py && exit 0
+
+echo "Failed." | elm -s"${ROBOMYNAME}: failed" $ROBOAPPROVEEMAIL
+
+exit 75

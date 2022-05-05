@@ -1,0 +1,81 @@
+README file for MarvinTheRoboModerator v0.01a
+(as in Marvin, The Paranoid Android)
+
+Marvin is a robomoderator.  Marvin will moderate a newsgroup,
+automagically and without human intervention, except when something
+goes wrong.  Everything is untested and under developement.  You have
+been warned.
+
+Essentially Marvin does the following:
+
+  1) It receives mail sent to submission address
+
+  2) It fixes some typical mistakes in the headers ("lint")
+
+  3) It makes some checks to determine if the article will be rejected
+
+  4) It makes some checks to determine whether the author should
+     be warned (e.g. too long signature)
+
+  5) If there were no grounds for rejection it will post the article.
+
+  6) If it seems to be ok to send autoreply (no mail loops and the author
+     has not requested no autoreplies) Marvin will compose and send an
+     autoreply.  If there were warnings (e.g. too long signatures) the
+     Marvin will mention them in the autoreply.  If the article was
+     rejected, Marvin will list the reasons.
+
+Tests for the article are implemented as a Python class, which makes
+it easy to customize them or to add more of the same stuff later on.
+
+
+Files:
+
+COPYING  Terms of use and copyright information (read this first!)
+
+README  This file
+
+archive/  Will contain logs of moderated messages
+
+robo.py  Main program files, Python script
+
+sample  Sample test message to be fed to sfnet-test
+
+sfnet-test  Main script.  Sendmail should pipe submissions to this script.
+
+submission.py  Main moderation script, contains e.g. texts to be sent
+               in autoreplies and grounds for rejection of articles.
+
+updatevalidgroups  Finds all unmoderated groups in your NNTPSERVER and 
+                   updates file validgroups.
+
+validgroups  List of groups allowed in the Newsgroups-line (other than
+             group ROBOMYNAME).  This could e.g. the list of all
+             unmoderated groups in your NNTPSERVER.
+
+validgroups.py  Python script used by updatevalidgroups.
+
+
+Setup:
+
+In default setup Marvin will moderate news:sfnet.test (Marvin does not
+know that sfnet.test is an unmoderated test group).  The mail coming
+to the submission mail box should be fed to script sfnet-test.  If
+something goes wrong the script exits with code 75, which under
+typical sendmail installation causes the mail to return to the mail
+queue for a retry.  See /usr/include/sysexits.h for information on
+exit codes in your system.
+
+You should adjust the environment variables in sfnet test to fit your
+needs.  Also please remember to change the texts in submission.py.  
+
+You should have two email aliases, one for submission of articles
+(like sfnet-test@foo.example) and one to contact the (human)
+moderators (like sfnet-test-request@foo.example).
+
+BUGS:
+
+Probably many.  
+
+
+Kai Puolamäki/2001-05-06
